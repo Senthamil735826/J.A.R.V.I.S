@@ -7,6 +7,7 @@ from livekit.plugins import (
 )
 from livekit.plugins import google
 from prompt import AGENT_INSTRUCTION, SESSION_INSTRUCTION
+from tools import get_weather, search_web
 load_dotenv()
 
 
@@ -16,8 +17,11 @@ class Assistant(Agent):
                          llm=google.beta.realtime.RealtimeModel(
             voice="Aoede",
             temperature=0.8,
+        ),
+        tools=[get_weather, search_web],
         )
-        )
+
+
 
 async def entrypoint(ctx: agents.JobContext):
     session = AgentSession(
